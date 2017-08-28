@@ -1,0 +1,10 @@
+{
+    "name":"roborace",
+    "authors":["Pierre Hébert","Thomas Hryniw"],
+    "license":"proprietary",
+    "description":"A computer version of Robot Rally",
+    "version":"0.0.1",
+    "dependencies":{
+        "dsfml":"~>2.1.1"
+    }
+}
