@@ -1,9 +1,10 @@
 module robo_race.grid;
 
 import dsfml.graphics;
+import robo_race.tile;
 
 class Grid : Drawable {
-    Sprite[][] board;
+    Tile[][] board;
     enum int[2] tileSize = [40,40];
     static Texture blank;
     static this() {
