@@ -1,4 +1,4 @@
-module grid;
+module robo_race.grid;
 
 import dsfml.graphics;
 
@@ -8,7 +8,7 @@ class Grid : Drawable {
     static Texture blank;
     static this() {
         blank = new Texture();
-        if(!blank.loadFromFile("RoboRallyTiles/Basic/Base.png")) throw new Exception("texture unloadable");
+        if(!blank.loadFromFile("tiles/Basic/Base.png")) throw new Exception("texture unloadable");
     }
     
     this(size_t width = 12, size_t height = 12) {

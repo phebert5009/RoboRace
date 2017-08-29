@@ -1,5 +1,5 @@
 import dsfml.graphics;
-import grid;
+import robo_race;
 immutable Color ItemBlank = Color(27,130,95);
 
 int main(string[] args) {

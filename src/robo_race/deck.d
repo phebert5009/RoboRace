@@ -1,4 +1,4 @@
-module deck;
+module robo_race.deck;
 
 struct Deck {
     string[] cards = [
@@ -6,7 +6,7 @@ struct Deck {
         "right:20",
     ];
     alias cards this;
-    this() {
+    void shuffle() {
         import std.random;
         cards.randomShuffle();
     }
