@@ -1,6 +1,6 @@
 module robo_race.tile;
 
-import dsfml.graphics
+import dsfml.graphics;
 
 enum Walls : byte {
     none           = 0b0000,
@@ -21,7 +21,7 @@ enum Walls : byte {
     all            = 0b1111
 }
 
-struct Tile : Drawable, Transformable {
+class Tile : Drawable, Transformable {
     RenderTexture texture;
     
 
@@ -36,8 +36,40 @@ struct Tile : Drawable, Transformable {
     }
 }
 
+struct Tiles {
+    static:
+    private enum string path = "tiles/";
+    struct Basic {
+        static:
+        private enum string path = Tiles.path ~ "basic/";
+        string base = path ~ "base.png";
+        string option = path ~ "OptionTile.png";
+        string option2 = path ~ "Option2Tile.png";
+    }
+    struct Conveyor {
+        static:
+        private enum string path = Tiles.path ~ "Conveyor/";
+        struct ThreeWay {
+            static:
+            private enum string path = Conveyor.path ~ "3P/";
+            string downFromLeft = path ~ "DfL.png";
+            string downFromRight = path ~ "DfR.png";
+            string leftFromDown = path ~ "LfD.png";
+            string leftFromUp = path ~ "LfU.png";
+            string rightFromDown = path ~ "RfD.png";
+            string rightFromUp = path ~ "RfU.png";
+            string upFromLeft = path ~ "UfL.png";
+            string upFromRight = path ~ "UfR.png";
+            string tDown = path ~ "tD.png";
+            string tLeft = path ~ "tL.png";
+            string tUp = path ~ "tU.png";
+        }
+        string up = path ~ "UTile.png";
+    }
+}
+
 class TileGenerator {
-    private enum wallPath = "tiles/walls/"
+    private enum wallPath = "tiles/walls/";
     enum string[Walls] wallImg = [
         Walls.none:wallPath ~"none.png",
         Walls.north:wallPath~"North.png",
@@ -47,15 +79,15 @@ class TileGenerator {
         Walls.northsouth:wallPath~"NS.png",
         Walls.southeast:wallPath~"SE.png",
         Walls.northsoutheast:wallPath~"NSE.png",
-        west:wallPath~"West.png",
-        northwest:wallPath~"NW.png",
-        eastwest:wallPath~"EW.png",
-        northeastwest:wallPath~"NEW.png",
-        southwest:wallPath~"SW.png",
-        northsouthwest:wallPath~"NSW.png",
-        southeastwest:wallPath~"SEW.png",
-        all:wallPath~"All.png",
-    ]
+        Walls.west:wallPath~"West.png",
+        Walls.northwest:wallPath~"NW.png",
+        Walls.eastwest:wallPath~"EW.png",
+        Walls.northeastwest:wallPath~"NEW.png",
+        Walls.southwest:wallPath~"SW.png",
+        Walls.northsouthwest:wallPath~"NSW.png",
+        Walls.southeastwest:wallPath~"SEW.png",
+        Walls.all:wallPath~"All.png",
+    ];
 
     static this() {
         

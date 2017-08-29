@@ -15,7 +15,7 @@ class Grid : Drawable {
     this(size_t width = 12, size_t height = 12) {
         board.reserve(width);
         for(size_t x = 0; x < width; x++) {
-            Sprite[] row;
+            Tile[] row;
             row.reserve(height);
             for(size_t y = 0; y < height; y++) {
                 Sprite sp = new Sprite();
