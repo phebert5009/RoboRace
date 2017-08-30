@@ -103,8 +103,11 @@ struct Tiles {
 }
 
 class TileGenerator {
+    import std.meta;
     private enum wallPath = "tiles/walls/";
     static Texture[string] textures;
+    static RenderTexture[Walls][string] memo;
+    
     enum string[Walls] wallImg = [
         Walls.none:wallPath ~"none.png",
         Walls.north:wallPath~"North.png",
@@ -128,34 +131,44 @@ class TileGenerator {
         
     }
     
+    
     static Tile generate(string tileFile,Walls walls = Walls.none) {
-        // TODO add higher level of memoization
         import std.stdio;
-        auto rTexture = new RenderTexture();
-        rTexture.create(40,40);
-        Texture tb,tw; // b for background, w for walls
-        if(tileFile in textures) tb = textures[tileFile];
-        else {
-            tb = new Texture();
-            if(!tb.loadFromFile(tileFile)) throw new Exception("could not load Texture: " ~ tileFile);
-            textures[tileFile] = tb;
-        }
-        {
-            if(wallImg[walls] in textures) tw = textures[wallImg[walls]];
+        if(tileFile in memo && walls in memo[tileFile]) {
+            Tile ans = new Tile();
+            ans.texture = memo[tileFile][walls];
+            return ans;
+        } else {
+            auto rTexture = new RenderTexture();
+            rTexture.create(40,40);
+            Texture tb,tw; // b for background, w for walls
+            if(tileFile in textures) tb = textures[tileFile];
             else {
-                tw = new Texture();
-                if(!tw.loadFromFile(wallImg[walls])) throw new Exception("could not load Texture: " ~ wallImg[walls]);
-                textures[wallImg[walls]] = tw;
+                tb = new Texture();
+                if(!tb.loadFromFile(tileFile)) throw new Exception("could not load Texture: " ~ tileFile);
+                textures[tileFile] = tb;
             }
+            if(walls != walls.none) {
+                if(wallImg[walls] in textures) tw = textures[wallImg[walls]];
+                else {
+                    tw = new Texture();
+                    if(!tw.loadFromFile(wallImg[walls])) throw new Exception("could not load Texture: " ~ wallImg[walls]);
+                    textures[wallImg[walls]] = tw;
+                }
+            }
+            Sprite sb = new Sprite();
+            sb.setTexture(tb);
+            rTexture.draw(sb);
+            if(walls != walls.none) {
+                Sprite sw = new Sprite();
+                sw.setTexture(tw);
+                rTexture.draw(sw);
+            }
+            rTexture.display();
+            memo[tileFile][walls] = rTexture;
+            Tile ans = new Tile();
+            ans.texture = rTexture;
+            return ans;
         }
-        Sprite sb = new Sprite(), sw = new Sprite();
-        sb.setTexture(tb);
-        sw.setTexture(tw);
-        rTexture.draw(sb);
-        rTexture.draw(sw);
-        rTexture.display();
-        Tile ans = new Tile();
-        ans.texture = rTexture;
-        return ans;
     }
 }
