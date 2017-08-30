@@ -16,10 +16,8 @@ struct Card {
   */
   
   
-    private uint priority = cardNum;
-    private string name;
-    
-	setName (cardNum, factor)
+    private uint _priority;
+    private string _name;
 	
     uint priority() @property {
 	    return _priority;
@@ -31,18 +29,20 @@ struct Card {
   
     this(uint priority, int factor) {
         _priority = priority;
-		setName(priority, factor)
+		setName(factor);
     }
     
-    void setName (int priority, int factor) { 
+    void setName (int factor) {
+        factor *= 10;
 	    if (priority <= factor) _name = "U-Turn";
-	    else if (priority < priority && priority <= factor * 7) {
-	        if (priority % 20 = 1) _name = "Left";
-	        else _Name = "Right"
+	    else if (factor < priority && priority <= factor * 7) {
+	        if (priority % 20 == 10) _name = "Left";
+	        else _name = "Right";
 	    }
-	    else if (factor * 7 < priority && priority <= factor * 8) _name = "Back Up"
-	    else if (factor * 8 < priority && priority <= factor * 11) _name = "Move 1"
-	    else if (factor * 11 < priority && priority <= factor * 13) _name = "Move 2"
-	    else if (factor * 13 < priority && priority <= factor * 14) _name = "Move 3" 
+	    else if (factor * 7 < priority && priority <= factor * 8) _name = "Back Up";
+	    else if (factor * 8 < priority && priority <= factor * 11) _name = "Move 1";
+	    else if (factor * 11 < priority && priority <= factor * 13) _name = "Move 2";
+	    else if (factor * 13 < priority && priority <= factor * 14) _name = "Move 3";
+	    else _name = "unknown"; // if this happens: Error
     }
 }

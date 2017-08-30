@@ -11,6 +11,9 @@ int main(string[] args) {
     Player player = new Player("objects/Player1.png");
     player.turnLeft();
     player.move();
+    Deck deck = Deck(6);
+    deck.shuffle();
+    writeln(deck);
     while(window.isOpen) {
         Event event;
         while(window.pollEvent(event)) {
