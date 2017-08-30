@@ -8,6 +8,9 @@ int main(string[] args) {
     window.setFramerateLimit(30);
     Grid grid = new Grid();
     Clock clock = new Clock();
+    Player player = new Player("objects/Player1.png");
+    player.turnLeft();
+    player.move();
     while(window.isOpen) {
         Event event;
         while(window.pollEvent(event)) {
@@ -17,6 +20,7 @@ int main(string[] args) {
         }
         window.clear(Color(67,175,125));
         window.draw(grid);
+        window.draw(player);
         window.display();
         write("\r",clock.restart,"            ");
     }

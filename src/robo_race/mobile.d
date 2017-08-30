@@ -15,21 +15,19 @@ class MobilePiece : Drawable {
     protected Texture texture;
     protected Sprite sprite;
     
-    this(Texture txt) {
-        texture = txt;
+    this(string imageFile) {
+        texture = new Texture();
+        if(!texture.loadFromFile(imageFile)) throw new Exception("unable to load texture: " ~ imageFile);
         sprite = new Sprite();
-        sprite.setTexture(txt);
+        sprite.setTexture(texture);
         auto lob = sprite.getLocalBounds;
         sprite.origin = Vector2f(lob.width/2,lob.height/2);
     }
     
     Vector2f position() @property {
-        Vector2f ans;
+        Vector2f ans = Vector2f(0.0f,0.0f);
         // first center on tile.
-        auto glob = sprite.getGlobalBounds;
-        auto hCenter = glob.width / 2;
-        auto vCenter = glob.height / 2;
-        ans += Vector2f(20-hCenter,20-vCenter);
+        ans += Vector2f(20,20);
         // then place on specific tile
         ans += _position * 40;
         return ans;
@@ -54,26 +52,24 @@ class MobilePiece : Drawable {
         if(sprite.rotation == 0) {
             _position += Vector2i(0,n);
         } else if(sprite.rotation == 90) {
-            _position += Vector2i(n,0);
+            _position += Vector2i(-n,0);
         } else if(sprite.rotation == 180) {
             _position += Vector2i(0,-n);
         } else if(sprite.rotation == 270) {
-            _position += Vector2i(-n,0);
+            _position += Vector2i(n,0);
         }
-        sprite.position = position;
     }
     
     void moveLeft(int n = 1) { // for crabLegs
         if(sprite.rotation == 0) {
             _position += Vector2i(n,0);
         } else if(sprite.rotation == 90) {
-            _position += Vector2i(0,n);
+            _position += Vector2i(0,-n);
         } else if(sprite.rotation == 180) {
             _position += Vector2i(-n,0);
         } else if(sprite.rotation == 270) {
-            _position += Vector2i(0,-n);
+            _position += Vector2i(0,n);
         }
-        sprite.position = position;
     }
     
     void moveGlobal(Direction direction, int n = 1) {
@@ -83,10 +79,10 @@ class MobilePiece : Drawable {
         } else { //vertical
             _position += Vector2i(0,n);
         }
-        sprite.position = position;
     }
     
     void draw(RenderTarget target, RenderStates states) {
+        sprite.position = position;
         sprite.draw(target, states);
     }
 }
