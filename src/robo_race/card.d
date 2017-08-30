@@ -45,4 +45,10 @@ struct Card {
 	    else if (factor * 13 < priority && priority <= factor * 14) _name = "Move 3";
 	    else _name = "unknown"; // if this happens: Error
     }
+    
+    int opCmp(Card other) {
+        if(priority < other.priority) return -1;
+        else if(priority > other.priority) return 1;
+        else return 0;
+    }
 }
