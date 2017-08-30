@@ -26,8 +26,7 @@ class Tile : Drawable {
     RenderTexture texture;
     //void delegate(MoveInfo) onEnter // called when player moves into the tile
     //void delegate(MoveInfo) onExit // called when player moves off the tile
-    //void delegate(MoveInfo) onLand // called when player stops on the tile
-    //void delegate(MoveInfo) onTransfer // called when a conveyor or pusher(future) move the player onto the tile
+    //void delegate(MoveInfo,int) onLand // called when player is on the tile the in parameter is for things such as conveyor priority
 
     override void draw(RenderTarget target, RenderStates states) {
         Sprite sprite = new Sprite();
