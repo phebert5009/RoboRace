@@ -13,6 +13,7 @@ struct Deck {
 	    int maxCard = 14 * factor * 10;
 	    cards.reserve((14*factor)-1);
 	    for(uint i = 10; i <= maxCard; i += 10) cards ~= Card(i, factor);
+	    shuffle();
 	}
 	
     //alias cards this; // pas certain si on a besoin

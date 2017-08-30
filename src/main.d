@@ -12,7 +12,6 @@ int main(string[] args) {
     player.turnLeft();
     player.move();
     Deck deck = Deck(6);
-    deck.shuffle();
     writeln(deck);
     while(window.isOpen) {
         Event event;
