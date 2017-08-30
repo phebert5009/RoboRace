@@ -6,8 +6,7 @@ A computer version of Robot Rally
 0.0.2 have a card deck; verify sorting  
 0.0.3 display card & player  
 0.0.4 display registers  
-0.0.5 display buttons  
-0.0.6 display player(s)  
+0.0.5 display buttons
 ### 0.1 basic GUI control
 0.1.0 move player card by card  
 0.1.1 new game button resets  

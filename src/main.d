@@ -22,7 +22,7 @@ int main(string[] args) {
         window.draw(grid);
         window.draw(player);
         window.display();
-        write("\r",clock.restart,"            ");
+        write("\r",clock.restart,"            "); // display frame time
     }
     writeln();
     return 0;
