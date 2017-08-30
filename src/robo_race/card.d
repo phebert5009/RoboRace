@@ -34,15 +34,15 @@ struct Card {
 		setName(priority, factor)
     }
     
-  void setName (int priority, int factor) { 
-	if (priority <= factor) _name = "U-Turn";
-	else if (priority < priority && priority <= factor * 7) {
-	  if (priority % 20 = 1) _name = "Left";
-	  else _Name = "Right"
-	}
-	else if (factor * 7 < priority && priority <= factor * 8) _name = "Back Up"
-	else if (factor * 8 < priority && priority <= factor * 11) _name = "Move 1"
-	else if (factor * 11 < priority && priority <= factor * 13) _name = "Move 2"
-	else if (factor * 13 < priority && priority <= factor * 14) _name = "Move 3" 
-  }
+    void setName (int priority, int factor) { 
+	    if (priority <= factor) _name = "U-Turn";
+	    else if (priority < priority && priority <= factor * 7) {
+	        if (priority % 20 = 1) _name = "Left";
+	        else _Name = "Right"
+	    }
+	    else if (factor * 7 < priority && priority <= factor * 8) _name = "Back Up"
+	    else if (factor * 8 < priority && priority <= factor * 11) _name = "Move 1"
+	    else if (factor * 11 < priority && priority <= factor * 13) _name = "Move 2"
+	    else if (factor * 13 < priority && priority <= factor * 14) _name = "Move 3" 
+    }
 }
