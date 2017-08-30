@@ -18,11 +18,11 @@ struct Card (int cardNum){
 	- setName (cardNumber)
   */
   
- /* 
+  
     private uint priority;
     private string name;
     
-    int priority() @property {
+    uint priority() @property {
 	    return _priority;
     }
   
@@ -31,8 +31,8 @@ struct Card (int cardNum){
     }
   
     this(string name, uint priority) {
-        this.name = name;
-        this.priority = priority;
+        _name = name;
+        _priority = priority;
     }
     
   /* pas besoin
