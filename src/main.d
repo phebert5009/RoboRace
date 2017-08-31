@@ -9,8 +9,7 @@ int main(string[] args) {
 	Grid grid = new Grid();
 	Clock clock = new Clock();
 	Player player = new Player("objects/Player1.png");
-	player.turnLeft();
-	player.move();
+	player.move(11);
 	Deck deck = Deck(600); //600 is not noticeable
 	Hand hand;
 

@@ -1,7 +1,7 @@
 module robo_race.card;
 
 import dsfml.graphics;
-
+import robo_race;
 //private string ratio = "1:3:3:1:3:2:1" // met ceci dans deck.d, comme fonction pour créer un deck
 
 struct Card {
@@ -60,6 +60,7 @@ struct Card {
     }
 
 	void initTexture () {
+	    import std.conv;
 		texture = new RenderTexture();
 		texture.create(90, 120);
 		Sprite sprite = new Sprite();
@@ -71,7 +72,7 @@ struct Card {
 		text1.setFont(defaultFont);
 		text1.position(Vector2f(15, 90));
 		Text text2 = new Text();
-		text2.setString(priority);
+		text2.setString(priority.to!string);
 		text2.setColor(Color.Green);
 		text2.setFont(defaultFont);
 		text2.position(Vector2f(52, 13));

@@ -9,7 +9,7 @@ public import robo_race.player;
 public import robo_race.hand;
 public import dsfml.graphics : Font;
 private Font defFont;
-struct 
+
 Font defaultFont() @property{
     if(defFont) {
         return defFont;

@@ -12,12 +12,13 @@ enum Direction {
 /// pieces that can move, such as players or goals
 class MobilePiece : Drawable {
 	struct State {
-		float rotation;
-		Vector2f position;
+		float rotation = 0;
+		Vector2f position = Vector2f(0,0);
 		float travelPt;
 	}
+	protected enum float velocity = 0.03f;
 	protected Texture texture;
-	protected State current, target;
+	protected State current = State(0,Vector2f(0,0),0), delta = State(0,Vector2f(0,0),velocity);
 	protected Sprite sprite;
 	
 	this(string imageFile) {
@@ -39,60 +40,74 @@ class MobilePiece : Drawable {
 	}
 	
 	void turnRight() {
-		sprite.rotation = sprite.rotation + 90;
-		sprite.rotation = sprite.rotation % 360;
+		sprite.rotation = 90;
 	}
 	
 	void turnLeft() {
-		target.rotation = sprite.rotation - 90;
-		sprite.rotation = (sprite.rotation + 360) % 360;
+		delta.rotation = -90;
 	}
 	
 	void uTurn() {
-		target.rotation = sprite.rotation + 180;
-		target.rotation = sprite.rotation % 360;
+		delta.rotation = 180;
 	}
 	
 	void move(int n = 1) {
 		if(sprite.rotation == 0) {
-			target.position += Vector2i(0,n);
+			delta.position = Vector2i(0,n);
 		} else if(sprite.rotation == 90) {
-			target.position += Vector2i(-n,0);
+			delta.position = Vector2i(-n,0);
 		} else if(sprite.rotation == 180) {
-			target.position += Vector2i(0,-n);
+			delta.position = Vector2i(0,-n);
 		} else if(sprite.rotation == 270) {
-			target.position += Vector2i(n,0);
+			delta.position = Vector2i(n,0);
 		}
 	}
 	
 	void moveLeft(int n = 1) { // for crabLegs
 		if(sprite.rotation == 0) {
-			target.position += Vector2f(n,0);
+			delta.position = Vector2f(n,0);
 		} else if(sprite.rotation == 90) {
-			target.position += Vector2f(0,-n);
+			delta.position = Vector2f(0,-n);
 		} else if(sprite.rotation == 180) {
-			target.position += Vector2f(-n,0);
+			delta.position = Vector2f(-n,0);
 		} else if(sprite.rotation == 270) {
-			target.position += Vector2f(0,n);
+			delta.position = Vector2f(0,n);
 		}
 	}
 	
 	void moveGlobal(Direction direction, int n = 1) {
 		if(direction%2) n = -n;
 		if(direction/2) { //horizontal
-			target.position += Vector2f(n,0);
+			delta.position = Vector2f(n,0);
 		} else { //vertical
-			target.position += Vector2f(0,n);
+			delta.position = Vector2f(0,n);
 		}
 	}
 
 	void update() {
-		
+	    import std.math;
+	    if(delta.position == Vector2f(0,0) && delta.rotation == 0.0f) return;
+		if(current.travelPt >= 1.0f) {
+		    import std.stdio;
+		    //writeln(current.position);
+		    current.position.x = current.position.x.round();
+		    current.position.y = current.position.y.round();
+		    current.rotation = current.rotation.round();
+		    //writeln(current.position);
+		    current.travelPt = 0;
+		    delta = State.init;
+		    delta.travelPt = velocity;
+		} else {
+	        current.position += delta.position * delta.travelPt;
+		    current.rotation += delta.rotation * delta.travelPt;
+		    current.travelPt += delta.travelPt;
+		}
 	}
 
 	void draw(RenderTarget target, RenderStates states) {
 		update();
 		sprite.position = position;
+		sprite.rotation = current.rotation;
 		sprite.draw(target, states);
 	}
 }
