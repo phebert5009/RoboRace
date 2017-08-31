@@ -65,6 +65,15 @@ struct Card {
 		Sprite sprite = new Sprite();
 		sprite.setTexture(bkg);
 		texture.draw(sprite);
-
+		Text text1 = new Text();
+		text1.setString(name);
+		text1.setColor(Color.Green);
+		text1.setFont(defaultFont);
+		text1.position(Vector2f(15, 90));
+		Text text2 = new Text();
+		text2.setString(priority);
+		text2.setColor(Color.Green);
+		text2.setFont(defaultFont);
+		text2.position(Vector2f(52, 13));
 	}
 }
