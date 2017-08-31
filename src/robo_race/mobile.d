@@ -11,8 +11,13 @@ enum Direction {
 
 /// pieces that can move, such as players or goals
 class MobilePiece : Drawable {
+    struct State {
+        float rotation;
+        Vector2f position;
+    }
     protected Vector2i _position;
     protected Texture texture;
+    protected State current, target;
     protected Sprite sprite;
     
     this(string imageFile) {

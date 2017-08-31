@@ -7,7 +7,7 @@ import robo_race.card;
 //private string ratio = "1:3:3:1:3:2:1"
 
 struct Deck {
-    Card[] cards;
+    private Card[] cards;
 	
 	this(int factor) {
 	    int maxCard = 14 * factor * 10;
@@ -29,6 +29,25 @@ struct Deck {
             ans ~= card.to!string;
             ans ~= '\n';
         }
+        return ans;
+    }
+
+    Card front() @property {
+        if(!empty) return cards[0];
+        else return Card.init; //Card(0,"")
+    }
+    
+    void popFront() {
+        if(!empty) cards = cards[1..$];
+    }
+    
+    bool empty() @property {
+        return cards.length == 0;
+    }
+    
+    Deck save() @property { // allows safe foreach loop iteration
+        Deck ans;
+        ans.cards = cards.dup;
         return ans;
     }
 }

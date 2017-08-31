@@ -11,8 +11,10 @@ int main(string[] args) {
     Player player = new Player("objects/Player1.png");
     player.turnLeft();
     player.move();
-    Deck deck = Deck(6);
-    writeln(deck);
+    Deck deck = Deck(600); //600 is not noticeable
+    Hand hand;
+    hand.drawCards(deck);
+    writeln(hand);
     while(window.isOpen) {
         Event event;
         while(window.pollEvent(event)) {
