@@ -1,2 +1,8 @@
+*.o
+*.obj
+*.sln
+*.dproj
+*.a
+*.lib
 roborace
-.dub/*
+.dub

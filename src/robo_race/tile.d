@@ -24,9 +24,9 @@ enum Walls : byte {
 class Tile : Drawable {
     Vector2f position;
     RenderTexture texture;
-    //void delegate(MoveInfo) onEnter // called when player moves into the tile
-    //void delegate(MoveInfo) onExit // called when player moves off the tile
-    //void delegate(MoveInfo,int) onLand // called when player is on the tile the in parameter is for things such as conveyor priority
+    void delegate(MoveInfo) onEnter // called when player moves into the tile
+    void delegate(MoveInfo) onExit // called when player moves off the tile
+    void delegate(MoveInfo,int) onLand // called when player is on the tile the in parameter is for things such as conveyor priority
 
     override void draw(RenderTarget target, RenderStates states) {
         Sprite sprite = new Sprite();
