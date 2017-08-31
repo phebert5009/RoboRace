@@ -4,7 +4,7 @@ import dsfml.graphics;
 import robo_race;
 //private string ratio = "1:3:3:1:3:2:1" // met ceci dans deck.d, comme fonction pour créer un deck
 
-struct Card {
+class Card : Drawable {
   /*Card Attributes:
 	- priority
     - image
@@ -15,10 +15,12 @@ struct Card {
 	- getName ()
   */
   
-  
+    alias opCmp = Object.opCmp;
     private uint _priority;
     private string _name;
 	private RenderTexture texture;
+	private Sprite sprite;
+	Vector2f position = Vector2f(0,0);
 	
 	static Texture bkg;
 	static this() {
@@ -70,11 +72,31 @@ struct Card {
 		text1.setString(name);
 		text1.setColor(Color.Green);
 		text1.setFont(defaultFont);
-		text1.position(Vector2f(15, 90));
+		text1.setCharacterSize = 16;
+		text1.position(Vector2f(17, 85));
+		texture.draw(text1);
 		Text text2 = new Text();
 		text2.setString(priority.to!string);
 		text2.setColor(Color.Green);
 		text2.setFont(defaultFont);
-		text2.position(Vector2f(52, 13));
+		text2.setCharacterSize = 12;
+		text2.position(Vector2f(52, 11));
+		texture.draw(text2);
+		texture.display();
+	}
+	
+	override string toString() {
+	    import std.conv;
+	    return name ~ "(" ~ priority.to!string ~ ")";
+	}
+	
+	override void draw(RenderTarget target, RenderStates states) {
+	    if(!texture)initTexture();
+	    if(!sprite) {
+	        sprite = new Sprite();
+	        sprite.setTexture(texture.getTexture);
+	    }
+	    sprite.position = position;
+	    sprite.draw(target,states);
 	}
 }

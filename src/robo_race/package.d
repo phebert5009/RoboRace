@@ -15,7 +15,7 @@ Font defaultFont() @property{
         return defFont;
     } else {
         defFont = new Font();
-        if(!defFont.loadFromFile(".fonts/tuffy.ttf")) throw new Exception("could not load tuffy regular");
+        if(!defFont.loadFromFile(".fonts/Tuffy.ttf")) throw new Exception("could not load tuffy regular");
         return defFont;
     }
 }

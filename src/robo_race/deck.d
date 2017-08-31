@@ -8,11 +8,11 @@ import robo_race.card;
 
 struct Deck {
     private Card[] cards;
-	
+	private size_t index = 0;
 	this(int factor) {
 	    int maxCard = 14 * factor * 10;
 	    cards.reserve((14*factor)-1);
-	    for(uint i = 10; i <= maxCard; i += 10) cards ~= Card(i, factor);
+	    for(uint i = 10; i <= maxCard; i += 10) cards ~= new Card(i, factor);
 	    shuffle();
 	}
 	
@@ -32,16 +32,16 @@ struct Deck {
     }
 
     Card front() @property {
-        if(!empty) return cards[0];
+        if(!empty) return cards[index];
         else return Card.init; //Card(0,"")
     }
     
     void popFront() {
-        if(!empty) cards = cards[1..$];
+        if(!empty) index++;
     }
     
     bool empty() @property {
-        return cards.length == 0;
+        return cards.length <= index;
     }
     
     Deck save() @property { // allows safe foreach loop iteration

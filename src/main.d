@@ -9,12 +9,10 @@ int main(string[] args) {
 	Grid grid = new Grid();
 	Clock clock = new Clock();
 	Player player = new Player("objects/Player1.png");
-	player.move(11);
-	Deck deck = Deck(600); //600 is not noticeable
+	player.move(3);
+	Deck deck = Deck(7); 
 	Hand hand;
-
 	hand.drawCards(deck);
-	writeln(hand);
 	while(window.isOpen) {
 		Event event;
 		while(window.pollEvent(event)) {
@@ -25,6 +23,7 @@ int main(string[] args) {
 		window.clear(Color(67,175,125));
 		window.draw(grid);
 		window.draw(player);
+		hand.draw(window);
 		window.display();
 		write("\r",clock.restart,"            "); // display frame time
 	}
