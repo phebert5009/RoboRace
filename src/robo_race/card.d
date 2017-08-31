@@ -18,6 +18,7 @@ struct Card {
   
     private uint _priority;
     private string _name;
+	private RenderTexture texture;
 	
     uint priority() @property {
 	    return _priority;

@@ -16,7 +16,6 @@ struct Deck {
 	    shuffle();
 	}
 	
-    //alias cards this; // pas certain si on a besoin
     void shuffle() {
         import std.random;
         cards.randomShuffle();

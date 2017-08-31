@@ -6,7 +6,9 @@ import std.algorithm : sort;
 struct Hand {
     Card[] cards;
 	int size = 9;
-	
+	struct Register {
+        
+    }
 	void drawCards (Deck deck) {
 		for (uint i = 0; i < size; i++) {
 			cards ~= deck.front;

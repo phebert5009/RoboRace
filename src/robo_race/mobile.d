@@ -91,3 +91,8 @@ class MobilePiece : Drawable {
         sprite.draw(target, states);
     }
 }
+
+struct MoveInfo {
+    MobilePiece movingPiece;
+    Direction travelDir;
+}
