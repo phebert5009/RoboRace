@@ -20,6 +20,12 @@ struct Card {
     private string _name;
 	private RenderTexture texture;
 	
+	static Texture bkg;
+	static this() {
+		bkg = new Texture();
+		if(!bkg.loadFromFile("objects/card.png")) throw new Exception("card.png not found");
+	}
+
     uint priority() @property {
 	    return _priority;
     }
@@ -52,4 +58,13 @@ struct Card {
         else if(priority > other.priority) return 1;
         else return 0;
     }
+
+	void initTexture () {
+		texture = new RenderTexture();
+		texture.create(90, 120);
+		Sprite sprite = new Sprite();
+		sprite.setTexture(bkg);
+		texture.draw(sprite);
+
+	}
 }
