@@ -22,6 +22,7 @@ class Card : Drawable {
 	private Sprite sprite;
 	Vector2f position = Vector2f(0,0);
 	package int registered = -1;
+	private void delegate(Player) action;
 	
 	static Texture bkg;
 	static this() {
@@ -42,18 +43,36 @@ class Card : Drawable {
 		setName(factor);
     }
     
+    void act(Player player) {
+        action(player);
+    }
+    
     void setName (int factor) {
         factor *= 10;
-	    if (priority <= factor) _name = "U-Turn";
-	    else if (factor < priority && priority <= factor * 7) {
-	        if (priority % 20 == 10) _name = "Left";
-	        else _name = "Right";
-	    }
-	    else if (factor * 7 < priority && priority <= factor * 8) _name = "Back Up";
-	    else if (factor * 8 < priority && priority <= factor * 11) _name = "Move 1";
-	    else if (factor * 11 < priority && priority <= factor * 13) _name = "Move 2";
-	    else if (factor * 13 < priority && priority <= factor * 14) _name = "Move 3";
-	    else _name = "unknown"; // if this happens: Error
+	    if (priority <= factor) {
+	        _name = "U-Turn";
+	        action = (player){player.uTurn();};
+        } else if (factor < priority && priority <= factor * 7) {
+	        if (priority % 20 == 10) {
+	            _name = "Left";
+	            action = (player){player.turnLeft();};
+	        } else {
+	            _name = "Right";
+	            action = (player){player.turnRight();};
+	        }
+	    } else if (factor * 7 < priority && priority <= factor * 8) {
+	        _name = "Back Up";
+	        action = (player){player.move(-1);};
+        } else if (factor * 8 < priority && priority <= factor * 11) {
+	        _name = "Move 1";
+	        action = (player){player.move();};
+        } else if (factor * 11 < priority && priority <= factor * 13) {
+	        _name = "Move 2";
+	        action = (player){player.move(2);};
+        } else if (factor * 13 < priority && priority <= factor * 14) {
+	        _name = "Move 3";
+	        action = (player){player.move(3);};
+	    } else _name = "unknown"; // if this happens: Error
     }
     
     int opCmp(Card other) {

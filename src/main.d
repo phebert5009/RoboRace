@@ -8,21 +8,23 @@ int main(string[] args) {
 	window.setFramerateLimit(30);
 	Grid grid = new Grid();
 	Clock clock = new Clock();
-	Player player = new Player("objects/Player1.png");
-	player.move(3);
-	player.turnLeft();
-	player.move(2);
-	player.turnRight();
-	player.move(1);
-	player.uTurn();
-	player.move(-1);
+	Player player = new Player("objects/Player1.png",Vector2f(6,6));
+	//player.move(3);
+	//player.turnLeft();
+	//player.move(2);
+	//player.turnRight();
+	//player.move(1);
+	//player.uTurn();
+	//player.move(-1);
 	Deck deck = Deck(7); 
 	Hand hand;
 	hand.drawCards(deck);
 	hand.register(0);
 	hand.register(4);
 	hand.register(2);
-	writeln(hand);
+	hand.register(7);
+	hand.register(3);
+	hand.act(player);
 	while(window.isOpen) {
 		Event event;
 		while(window.pollEvent(event)) {

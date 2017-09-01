@@ -2,6 +2,7 @@ module robo_race.hand;
 
 import robo_race.card;
 import robo_race.deck;
+import robo_race.player;
 import std.algorithm : sort;
 import dsfml.graphics;
 
@@ -39,11 +40,18 @@ struct Hand {
 	void register(size_t index) {
 	    if(cards[index].registered == -1) cards[index].registered = registered++;
 	    else {
+	        if(registered == 5) return;
 	        foreach(card; cards) {
 	            if(card.registered > cards[index].registered) card.registered--;
 	        }
 	        registered--;
 	    }
+	}
+	
+	void act(Player player) {
+	    for(int i = 0; i < registered;i++)
+	        foreach(card; cards)
+    	        if(card.registered == i) card.act(player);
 	}
 	
 	void discardAll(Deck deck) {
