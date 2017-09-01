@@ -21,6 +21,7 @@ class Card : Drawable {
 	private RenderTexture texture;
 	private Sprite sprite;
 	Vector2f position = Vector2f(0,0);
+	package int registered = -1;
 	
 	static Texture bkg;
 	static this() {
@@ -87,7 +88,7 @@ class Card : Drawable {
 	
 	override string toString() {
 	    import std.conv;
-	    return name ~ "(" ~ priority.to!string ~ ")";
+	    return name ~ "("~ (registered != -1 ? "=":"") ~ priority.to!string ~ ")";
 	}
 	
 	override void draw(RenderTarget target, RenderStates states) {

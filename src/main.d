@@ -19,6 +19,10 @@ int main(string[] args) {
 	Deck deck = Deck(7); 
 	Hand hand;
 	hand.drawCards(deck);
+	hand.register(0);
+	hand.register(4);
+	hand.register(2);
+	writeln(hand);
 	while(window.isOpen) {
 		Event event;
 		while(window.pollEvent(event)) {

@@ -1,17 +1,15 @@
 module robo_race.hand;
 
-import robo_race;
+import robo_race.card;
+import robo_race.deck;
 import std.algorithm : sort;
 import dsfml.graphics;
 
 struct Hand {
     Card[] cards;
 	int size = 9;
-	struct Register {
-        Card[] registered;
-        
-        // this might be a little problematic
-    }
+	private int registered = 0;
+	
 	void drawCards (Deck deck) {
 		for (uint i = 0; i < size; i++) {
 			cards ~= deck.front;
@@ -25,14 +23,31 @@ struct Hand {
 	}
 	
 	void drawOn(RenderWindow window) {
-	    for(size_t i = 0; i < cards.length; i++) {
-	        auto card = cards[i];
-	        card.position = Vector2f(i*90,40*12);
+	    for(size_t i = 0, r= 0; i + r < cards.length;) {
+	        auto card = cards[i+r];
+	        if(card.registered >= 0) {
+	            card.position = Vector2f(40 * 12 + 95 * r + 5,0);
+	            r++;
+	        } else {
+	            card.position = Vector2f(i*90,40*12);
+	            i++;
+	        }
 	        window.draw(card);
 	    }
 	}
 	
+	void register(size_t index) {
+	    if(cards[index].registered == -1) cards[index].registered = registered++;
+	    else {
+	        foreach(card; cards) {
+	            if(card.registered > cards[index].registered) card.registered--;
+	        }
+	        registered--;
+	    }
+	}
+	
 	void discardAll(Deck deck) {
-	    cards = new Card[];
+	    foreach(card; cards) card.registered = -1;
+	    cards = cards[0..0];
 	}
 }
