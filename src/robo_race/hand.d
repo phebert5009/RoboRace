@@ -27,7 +27,7 @@ struct Hand {
 	    for(size_t i = 0, r= 0; i + r < cards.length;) {
 	        auto card = cards[i+r];
 	        if(card.registered >= 0) {
-	            card.position = Vector2f(40 * 12 + 95 * r + 5,0);
+	            card.position = Vector2f(40 * 12 + 95 * card.registered + 5,0);
 	            r++;
 	        } else {
 	            card.position = Vector2f(i*90,40*12);
