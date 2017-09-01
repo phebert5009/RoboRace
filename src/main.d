@@ -10,6 +10,12 @@ int main(string[] args) {
 	Clock clock = new Clock();
 	Player player = new Player("objects/Player1.png");
 	player.move(3);
+	player.turnLeft();
+	player.move(2);
+	player.turnRight();
+	player.move(1);
+	player.uTurn();
+	player.move(-1);
 	Deck deck = Deck(7); 
 	Hand hand;
 	hand.drawCards(deck);

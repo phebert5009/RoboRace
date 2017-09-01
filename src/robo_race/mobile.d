@@ -1,6 +1,7 @@
 module robo_race.mobile;
 
 import dsfml.graphics;
+import std.container : DList;
 
 enum Direction {
 	up,
@@ -19,6 +20,7 @@ class MobilePiece : Drawable {
 	protected enum float velocity = 0.03f;
 	protected Texture texture;
 	protected State current = State(0,Vector2f(0,0),0), delta = State(0,Vector2f(0,0),velocity);
+	protected DList!State box;
 	protected Sprite sprite;
 	
 	this(string imageFile) {
@@ -40,60 +42,65 @@ class MobilePiece : Drawable {
 	}
 	
 	void turnRight() {
-		sprite.rotation = 90;
+	    State tmp;
+		tmp.rotation = 90;
+		box ~= tmp;
 	}
 	
 	void turnLeft() {
-		delta.rotation = -90;
+		State tmp;
+		tmp.rotation = -90;
+		box ~= tmp;
 	}
 	
 	void uTurn() {
-		delta.rotation = 180;
+		State tmp;
+		tmp.rotation = 180;
+		box ~= tmp;
 	}
 	
 	void move(int n = 1) {
-		if(sprite.rotation == 0) {
-			delta.position = Vector2i(0,n);
-		} else if(sprite.rotation == 90) {
-			delta.position = Vector2i(-n,0);
-		} else if(sprite.rotation == 180) {
-			delta.position = Vector2i(0,-n);
-		} else if(sprite.rotation == 270) {
-			delta.position = Vector2i(n,0);
-		}
+	    State tmp;
+		tmp.position = Vector2f(0,n);
+		box ~= tmp;
 	}
 	
 	void moveLeft(int n = 1) { // for crabLegs
-		if(sprite.rotation == 0) {
-			delta.position = Vector2f(n,0);
-		} else if(sprite.rotation == 90) {
-			delta.position = Vector2f(0,-n);
-		} else if(sprite.rotation == 180) {
-			delta.position = Vector2f(-n,0);
-		} else if(sprite.rotation == 270) {
-			delta.position = Vector2f(0,n);
-		}
+		State tmp;
+		tmp.position = Vector2f(n,0);
+		box ~= tmp;
 	}
 	
 	void moveGlobal(Direction direction, int n = 1) {
+	    State tmp;
 		if(direction%2) n = -n;
 		if(direction/2) { //horizontal
-			delta.position = Vector2f(n,0);
+			tmp.position = Vector2f(n,0);
 		} else { //vertical
-			delta.position = Vector2f(0,n);
+			tmp.position = Vector2f(0,n);
 		}
+		box ~= tmp;
 	}
 
 	void update() {
 	    import std.math;
-	    if(delta.position == Vector2f(0,0) && delta.rotation == 0.0f) return;
+	    if(immobile) {
+	        if(box.empty) return;
+	        delta = box.front;
+	        delta.travelPt = velocity;
+	        if(current.rotation == 90) {
+			    delta.position = Vector2f(-delta.position.y,-delta.position.x);
+		    } else if(current.rotation == 180) {
+			    delta.position = Vector2f(-delta.position.x,-delta.position.y);
+		    } else if(current.rotation == 270) {
+			    delta.position = Vector2f(delta.position.y,delta.position.x);
+		    }
+	        box.removeFront();
+	    }
 		if(current.travelPt >= 1.0f) {
-		    import std.stdio;
-		    //writeln(current.position);
 		    current.position.x = current.position.x.round();
 		    current.position.y = current.position.y.round();
-		    current.rotation = current.rotation.round();
-		    //writeln(current.position);
+		    current.rotation = roundRotation(current.rotation);
 		    current.travelPt = 0;
 		    delta = State.init;
 		    delta.travelPt = velocity;
@@ -103,6 +110,12 @@ class MobilePiece : Drawable {
 		    current.travelPt += delta.travelPt;
 		}
 	}
+	
+	bool immobile() @property {
+	    if(delta.position == Vector2f(0,0) && delta.rotation == 0.0f) return true;
+	    return false;
+	}
+	
 
 	void draw(RenderTarget target, RenderStates states) {
 		update();
@@ -115,4 +128,20 @@ class MobilePiece : Drawable {
 struct MoveInfo {
 	MobilePiece movingPiece;
 	Direction travelDir;
+}
+
+/// gets the angle to the nearest 0,90,180, or 270 degrees
+float roundRotation(float rotation) {
+    while(true) {
+        if(rotation < 45 && -45 < rotation) return rotation = 0;
+        if(rotation < 135 && 45 <= rotation) return rotation = 90;
+        if(rotation < 225 && 135 <= rotation) return rotation = 180;
+        if(rotation < 315 && 225 <= rotation) return rotation = 270;
+        if(315 <= rotation) {
+            rotation -= 360;
+        }
+        if(rotation <= -45) {
+            rotation += 360;
+        }
+    }
 }
