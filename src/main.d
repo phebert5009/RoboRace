@@ -29,7 +29,7 @@ int main(string[] args) {
 		window.clear(Color(67,175,125));
 		window.draw(grid);
 		window.draw(player);
-		hand.draw(window);
+		hand.drawOn(window);
 		window.display();
 		write("\r",clock.restart,"            "); // display frame time
 	}

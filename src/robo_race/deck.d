@@ -19,6 +19,7 @@ struct Deck {
     void shuffle() {
         import std.random;
         cards.randomShuffle();
+        index = 0;
     }
     
     string toString() {
