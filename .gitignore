@@ -6,5 +6,5 @@
 *.lib
 roborace
 .dub
-*.userprefs
 *.user*
+dub.selections.*
