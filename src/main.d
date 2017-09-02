@@ -8,7 +8,6 @@ int main(string[] args) {
 	auto window = new RenderWindow(VideoMode(40*12+5*7+90*5,40*12+120),"RoboRace");
 	window.setFramerateLimit(30);
 	
-	
 	Clock clock = new Clock();
 	
 	SceneManager manager = new SceneManager(MainScene.instance);

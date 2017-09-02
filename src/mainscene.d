@@ -17,13 +17,13 @@ class MainScene : Scene {
     
     private this() {
         deck = Deck(6);
-        grid = new Grid();
     }
     
     override bool init() {
         player = new Player("objects/Player1.png",Vector2f(5,5));
         hand.drawCards(deck);
-        //grid.load("somefile.txt");
+        grid = new Grid();
+        
         //start of tmp code
         hand.register(0);
 	    hand.register(4);
