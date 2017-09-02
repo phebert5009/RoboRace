@@ -23,7 +23,7 @@ struct Hand {
 	    return cards[index1];
 	}
 	
-	void drawOn(RenderWindow window) {
+	void draw(RenderTarget target, RenderStates states) {
 	    for(size_t i = 0, r= 0; i + r < cards.length;) {
 	        auto card = cards[i+r];
 	        if(card.registered >= 0) {
@@ -33,7 +33,7 @@ struct Hand {
 	            card.position = Vector2f(i*90,40*12);
 	            i++;
 	        }
-	        window.draw(card);
+	        card.draw(target,states);
 	    }
 	}
 	

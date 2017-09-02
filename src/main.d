@@ -1,44 +1,36 @@
 import dsfml.graphics;
-import robo_race;
 import std.stdio;
-immutable Color ItemBlank = Color(27,130,95);
+import scene;
+import mainscene;
+//immutable Color ItemBlank = Color(27,130,95);
 
 int main(string[] args) {
 	auto window = new RenderWindow(VideoMode(40*12+5*7+90*5,40*12+120),"RoboRace");
 	window.setFramerateLimit(30);
-	Grid grid = new Grid();
+	
+	
 	Clock clock = new Clock();
-	Player player = new Player("objects/Player1.png",Vector2f(6,6));
-	//player.move(3);
-	//player.turnLeft();
-	//player.move(2);
-	//player.turnRight();
-	//player.move(1);
-	//player.uTurn();
-	//player.move(-1);
-	Deck deck = Deck(7); 
-	Hand hand;
-	hand.drawCards(deck);
-	hand.register(0);
-	hand.register(4);
-	hand.register(2);
-	hand.register(7);
-	hand.register(3);
-	hand.act(player);
+	
+	SceneManager manager = new SceneManager(MainScene.instance);
+	MainScene.instance.manager = manager;
+	
 	while(window.isOpen) {
 		Event event;
 		while(window.pollEvent(event)) {
+		    manager.handleEvent(event);
 			if(event.type == Event.EventType.Closed) {
 				window.close();
 			}
 		}
+		
 		window.clear(Color(67,175,125));
-		window.draw(grid);
-		window.draw(player);
-		hand.drawOn(window);
+		window.draw(manager);
 		window.display();
-		write("\r",clock.restart,"            "); // display frame time
+		
+		write("\r",dur!"seconds"(1)/clock.restart," "); // display frame time
+		stdout.flush();
 	}
 	writeln();
 	return 0;
 }
+
