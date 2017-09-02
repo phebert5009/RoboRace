@@ -1,8 +1,8 @@
 # RoboRace
 A computer version of Robot Rally
 ## Tasks
-generate field images  
-create main menu scene (pheb)  
+generate field images
+restrict button actions in MainScene 
 create board builder scene
 ## Folders
 __objects__: mobile images such as cards, player(s)  

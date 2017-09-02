@@ -32,11 +32,11 @@ class Button : Drawable {
         return foregroundColor;
     }
     
-    uint CharacterSize() @property {
+    uint characterSize() @property {
         return charSize;
     }
     
-    uint CharacterSize(uint newSize) @property {
+    uint characterSize(uint newSize) @property {
         charSize = newSize;
         refresh();
         return charSize;

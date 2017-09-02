@@ -1,7 +1,6 @@
 import dsfml.graphics;
 import std.stdio;
 import scene;
-import mainscene;
 //immutable Color ItemBlank = Color(27,130,95);
 
 int main(string[] args) {
@@ -10,8 +9,7 @@ int main(string[] args) {
 	
 	Clock clock = new Clock();
 	
-	SceneManager manager = new SceneManager(MainScene.instance);
-	MainScene.instance.manager = manager;
+	manager = new SceneManager(MenuScene.instance);
 	
 	while(window.isOpen) {
 		Event event;
