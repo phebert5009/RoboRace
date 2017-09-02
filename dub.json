@@ -3,7 +3,7 @@
     "authors":["Pierre Hébert","Thomas Hryniw"],
     "license":"proprietary",
     "description":"A computer version of Robot Rally",
-    "version":"0.0.4",
+    "version":"0.1.0",
     "dependencies":{
         "dsfml":"~>2.1.1"
     }

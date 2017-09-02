@@ -1,6 +1,7 @@
 import robo_race;
 import dsfml.graphics;
 import scene;
+import gui.button;
 
 class MainScene : Scene {
     Grid grid;
@@ -8,6 +9,7 @@ class MainScene : Scene {
     Deck deck;
     Hand hand;
     SceneManager manager;
+    Button playHand;
     
     static MainScene instance;
     
@@ -17,6 +19,9 @@ class MainScene : Scene {
     
     private this() {
         deck = Deck(6);
+        playHand = new Button(90,20);
+        playHand.position = Vector2f(9*90+10,40*12+100);
+        playHand.text = "play hand";
     }
     
     override bool init() {
@@ -25,12 +30,12 @@ class MainScene : Scene {
         grid = new Grid();
         
         //start of tmp code
-        hand.register(0);
+        /*hand.register(0);
 	    hand.register(4);
 	    hand.register(2);
 	    hand.register(7);
 	    hand.register(3);
-	    hand.act(player);
+	    hand.act(player);*/
 	    //end of tmp code
         return true;
     }
@@ -47,9 +52,17 @@ class MainScene : Scene {
         grid.draw(target,states);
         player.draw(target,states);
         hand.draw(target,states);
+        playHand.draw(target,states);
     }
     
     override void handleEvent(Event event) {
-        
+        if(event.type == Event.EventType.MouseButtonReleased) {
+            if(event.mouseButton.button == Mouse.Button.Left) {
+                hand.register(event.mouseButton.x,event.mouseButton.y);
+            }
+            if(playHand.clicked(event.mouseButton.x,event.mouseButton.y)) {
+                hand.act(player);
+            }
+        }
     }
 }

@@ -38,13 +38,34 @@ struct Hand {
 	}
 	
 	void register(size_t index) {
-	    if(cards[index].registered == -1) cards[index].registered = registered++;
-	    else {
+	    if(cards[index].registered == -1) {
 	        if(registered == 5) return;
+	        cards[index].registered = registered++;
+	    } else {
 	        foreach(card; cards) {
 	            if(card.registered > cards[index].registered) card.registered--;
 	        }
+	        cards[index].registered = -1;
 	        registered--;
+	    }
+	}
+	
+	void register(int x, int y) {
+	    if(y > 40*12) {
+	        if(x < (size-registered)*90) {
+	            int regNum = x / 90;
+	            int i = -1, r = 0;
+	            while(i < regNum) {
+	                if(cards[i+r+1].registered != -1) {
+	                    r++;
+	                } else {
+	                    i++;
+	                }
+	            }
+	            import std.stdio;
+	            writeln("register ",cards[i+r]);
+	            register(i+r);
+	        }
 	    }
 	}
 	

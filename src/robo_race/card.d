@@ -1,7 +1,8 @@
 module robo_race.card;
 
 import dsfml.graphics;
-import robo_race;
+import robo_race.player;
+import defaults;
 //private string ratio = "1:3:3:1:3:2:1" // met ceci dans deck.d, comme fonction pour créer un deck
 
 class Card : Drawable {
