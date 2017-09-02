@@ -26,7 +26,6 @@ class SceneManager : Drawable {
     }
     
     bool changeScene(Scene scene) {
-        if(scene == currScene) return false;
         currScene.close();
         currScene = scene;
         return currScene.init();

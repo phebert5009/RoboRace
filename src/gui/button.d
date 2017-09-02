@@ -81,8 +81,9 @@ class Button : Drawable {
     }
     
     bool clicked(int x,int y) {
+        import std.stdio;
         if(position.x < x && x < position.x+width) {
-            if(position.y < x && y < position.x+width) {
+            if(position.y < y && y < position.y+height) {
                 return true;
             }
         }
