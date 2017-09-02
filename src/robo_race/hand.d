@@ -57,5 +57,6 @@ struct Hand {
 	void discardAll(Deck deck) {
 	    foreach(card; cards) card.registered = -1;
 	    cards = cards[0..0];
+	    deck.shuffle();
 	}
 }
