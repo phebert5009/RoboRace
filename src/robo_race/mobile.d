@@ -16,6 +16,7 @@ class MobilePiece : Drawable {
 		float rotation = 0;
 		Vector2f position = Vector2f(0,0);
 		float travelPt;
+		bool global = false;
 	}
 	protected enum float velocity = 0.03f;
 	protected Texture texture;
@@ -79,6 +80,7 @@ class MobilePiece : Drawable {
 		} else { //vertical
 			tmp.position = Vector2f(0,n);
 		}
+		tmp.global = true;
 		box ~= tmp;
 	}
 
@@ -88,12 +90,14 @@ class MobilePiece : Drawable {
 	        if(box.empty) return;
 	        delta = box.front;
 	        delta.travelPt = velocity;
-	        if(current.rotation == 90) {
-			    delta.position = Vector2f(-delta.position.y,-delta.position.x);
-		    } else if(current.rotation == 180) {
-			    delta.position = Vector2f(-delta.position.x,-delta.position.y);
-		    } else if(current.rotation == 270) {
-			    delta.position = Vector2f(delta.position.y,delta.position.x);
+	        if(!delta.global) {
+	            if(current.rotation == 90) {
+			        delta.position = Vector2f(-delta.position.y,-delta.position.x);
+		        } else if(current.rotation == 180) {
+			        delta.position = Vector2f(-delta.position.x,-delta.position.y);
+		        } else if(current.rotation == 270) {
+			        delta.position = Vector2f(delta.position.y,delta.position.x);
+		        }
 		    }
 	        box.removeFront();
 	    }
