@@ -20,25 +20,25 @@ interface Scene : Drawable {
 
 class SceneManager : Drawable {
     private Scene currScene;
-    
+
     this(Scene initialScene) {
         currScene = initialScene;
         currScene.init();
     }
-    
+
     bool changeScene(Scene scene) {
         currScene.close();
         currScene = scene;
         return currScene.init();
     }
-    
+
     void handleEvent(Event event) {
         if(event.type == Event.EventType.Closed) {
             currScene.close();
         }
         currScene.handleEvent(event);
     }
-    
+
     void draw(RenderTarget target, RenderStates states) {
         currScene.draw(target,states);
     }
@@ -50,19 +50,19 @@ SceneManager manager;
 class MainScene : Scene {
     import robo_race;
     import std.meta;
-    
+
     Grid grid;
     Player player;
     Deck deck;
     Hand hand;
     Button playHand, resetGame, newHand, exit;
-    
+
     static MainScene instance;
-    
+
     static this() {
         instance = new MainScene();
     }
-    
+
     private this() {
         deck = Deck(6);
         enum float btnRow = 9*90+10;
@@ -81,12 +81,12 @@ class MainScene : Scene {
         exit.position = Vector2f(btnRow,wHeight-btnSize[1]);
         exit.text = "exit";
     }
-    
+
     override bool init() {
         player = new Player("objects/Player1.png",Vector2f(5,5));
         hand.drawCards(deck);
         grid = new Grid();
-        
+
         //start of tmp code
         /*hand.register(0);
 	    hand.register(4);
@@ -97,7 +97,7 @@ class MainScene : Scene {
 	    //end of tmp code
         return true;
     }
-    
+
     override bool close() {
         hand.discardAll(deck);
         //player will be deallocated when init() is called
@@ -105,7 +105,7 @@ class MainScene : Scene {
         //grid will be reloaded in init
         return true;
     }
-    
+
     override void draw(RenderTarget target, RenderStates states) {
         grid.draw(target,states);
         player.draw(target,states);
@@ -115,12 +115,12 @@ class MainScene : Scene {
         newHand.draw(target,states);
         exit.draw(target,states);
     }
-    
+
     override void handleEvent(Event event) {
         if(event.type == Event.EventType.MouseButtonReleased) {
             if(event.mouseButton.button == Mouse.Button.Left) {
                 hand.register(event.mouseButton.x,event.mouseButton.y);
-                
+
                 if(playHand.clicked(event.mouseButton.x,event.mouseButton.y)) {
                     hand.act(player);
                 }
@@ -141,13 +141,13 @@ class MainScene : Scene {
 
 class MenuScene : Scene {
     Button playbtn, boardBuilderBtn;
-    
+
     public static MenuScene instance;
-    
+
     static this() {
         instance = new MenuScene();
     }
-    
+
     this() {
         playbtn = new Button(120,50);
         playbtn.position = Vector2f(120,50);
@@ -157,21 +157,21 @@ class MenuScene : Scene {
         boardBuilderBtn.position = Vector2f(120,150);
         boardBuilderBtn.text = "board builder";
         boardBuilderBtn.characterSize = 19;
-        
     }
-    
+
     override bool init() {
         return true;
     }
+
     override bool close() {
         return true;
     }
-    
+
     override void draw(RenderTarget target, RenderStates states) {
         playbtn.draw(target,states);
         boardBuilderBtn.draw(target,states);
     }
-    
+
     override void handleEvent(Event event) {
         if(event.type == Event.EventType.MouseButtonReleased) {
             if(event.mouseButton.button == Mouse.Button.Left) {

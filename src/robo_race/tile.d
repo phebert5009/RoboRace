@@ -40,6 +40,7 @@ class Tile : Drawable {
 struct Tiles {
     static:
     private enum string path = "tiles/";
+
     private mixin template conveyorNorm() {
         enum string downFromLeft = path ~ "DfL.png",
         downFromRight = path ~ "DfR.png",
@@ -50,14 +51,17 @@ struct Tiles {
         upFromLeft = path ~ "UfL.png",
         upFromRight = path ~ "UfR.png";
     }
+
     struct Basic {
         private enum string path = Tiles.path ~ "Basic/";
         enum string base = path ~ "Base.png",
         option = path ~ "OptionTile.png",
         option2 = path ~ "Option2Tile.png";
     }
+
     struct Conveyor {
         private enum string path = Tiles.path ~ "Conveyor/";
+
         static struct ThreeWay {
             private enum string path = Conveyor.path ~ "3P/";
             mixin conveyorNorm;
@@ -72,8 +76,10 @@ struct Tiles {
         right = path ~ "R.png",
         up = path ~ "U.png";
     }
+
     struct DoubleConveyor {
         private enum string path = Tiles.path ~ "DConveyor/";
+
         static struct ThreeWay {
             private enum string path = Conveyor.path ~ "3P/";
             mixin conveyorNorm;
@@ -88,11 +94,13 @@ struct Tiles {
         right = path ~ "R.png",
         up = path ~ "U.png";
     }
+
     struct Gears {
         private enum string path = Tiles.path ~ "Gears/";
         enum string counterClockwise = path ~ "cc.png",
         clockwise = path ~ "c.png";
     }
+
     struct Holes {
         enum string path = Tiles.path ~ "Holes/";
         // not private for automation
@@ -107,7 +115,7 @@ class TileGenerator {
     private enum wallPath = "tiles/walls/";
     static Texture[string] textures;
     static RenderTexture[Walls][string] memo;
-    
+
     enum string[Walls] wallImg = [
         Walls.none:wallPath ~"none.png",
         Walls.north:wallPath~"North.png",
@@ -130,8 +138,7 @@ class TileGenerator {
     static this() {
         
     }
-    
-    
+
     static Tile generate(string tileFile,Walls walls = Walls.none) {
         import std.stdio;
         if(tileFile in memo && walls in memo[tileFile]) {

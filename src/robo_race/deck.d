@@ -8,20 +8,20 @@ import robo_race.card;
 
 struct Deck {
     private Card[] cards;
-	private size_t index = 0;
-	this(int factor) {
-	    int maxCard = 14 * factor * 10;
-	    cards.reserve((14*factor)-1);
-	    for(uint i = 10; i <= maxCard; i += 10) cards ~= new Card(i, factor);
-	    shuffle();
-	}
-	
+    private size_t index = 0;
+    this(int factor) {
+        int maxCard = 14 * factor * 10;
+        cards.reserve((14*factor)-1);
+        for(uint i = 10; i <= maxCard; i += 10) cards ~= new Card(i, factor);
+        shuffle();
+    }
+
     void shuffle() {
         import std.random;
         cards.randomShuffle();
         index = 0;
     }
-    
+
     string toString() {
         import std.conv;
         string ans = "";
@@ -36,15 +36,15 @@ struct Deck {
         if(!empty) return cards[index];
         else return Card.init; //Card(0,"")
     }
-    
+
     void popFront() {
         if(!empty) index++;
     }
-    
+
     bool empty() @property {
         return cards.length <= index;
     }
-    
+
     Deck save() @property { // allows safe foreach loop iteration
         Deck ans;
         ans.cards = cards.dup;

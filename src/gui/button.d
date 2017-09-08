@@ -11,47 +11,47 @@ class Button : Drawable {
     private string btnText;
     private uint charSize = 12;
     private Color backgroundColor = Color.White, foregroundColor = Color.Black;
-    
+
     Color BGC() @property {
         return backgroundColor;
     }
-    
+
     Color BGC(Color newCol) @property {
         backgroundColor = newCol;
         refresh();
         return backgroundColor;
     }
-    
+
     Color FGC() @property {
         return foregroundColor;
     }
-    
+
     Color FGC(Color newCol) @property {
         foregroundColor = newCol;
         refresh();
         return foregroundColor;
     }
-    
+
     uint characterSize() @property {
         return charSize;
     }
-    
+
     uint characterSize(uint newSize) @property {
         charSize = newSize;
         refresh();
         return charSize;
     }
-    
+
     string text() @property {
         return btnText;
     }
-    
+
     string text(string newText) @property {
         btnText = newText;
         refresh();
         return btnText;
     }
-    
+
     this(uint width, uint height) {
         texture = new RenderTexture();
         texture.create(width,height);
@@ -60,7 +60,7 @@ class Button : Drawable {
         this.height = height;
         refresh();
     }
-    
+
     void refresh() {
         texture.clear(backgroundColor);
         Text txt = new Text();
@@ -79,7 +79,7 @@ class Button : Drawable {
         sprite.position = position;
         sprite.draw(target,states);
     }
-    
+
     bool clicked(int x,int y) {
         import std.stdio;
         if(position.x < x && x < position.x+width) {
