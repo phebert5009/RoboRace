@@ -8,3 +8,4 @@ roborace
 .dub
 *.user*
 dub.selections.*
+*dlangide*
