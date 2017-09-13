@@ -20,10 +20,21 @@ interface Scene : Drawable {
 
 class SceneManager : Drawable {
     private Scene currScene;
+    private static Scene[string] scenes;
 
     this(Scene initialScene) {
         currScene = initialScene;
         currScene.init();
+    }
+
+    static void manage(Scene scene,string id) { //convention name = class name - Scene (ex: MainScene -> Main)
+        scenes[id] = scene;
+    }
+    
+    bool changeScene(string sceneId) {
+        currScene.close();
+        currScene = scenes[sceneId];
+        return currScene.init();
     }
 
     bool changeScene(Scene scene) {
@@ -61,6 +72,7 @@ class MainScene : Scene {
 
     static this() {
         instance = new MainScene();
+        manager.manage(instance,"Main");
     }
 
     private this() {
@@ -132,7 +144,7 @@ class MainScene : Scene {
                     hand.drawCards(deck);
                 }
                 if(exit.clicked(event.mouseButton.x,event.mouseButton.y)) {
-                    manager.changeScene(MenuScene.instance);
+                    manager.changeScene("Menu");
                 }
             }
         }
@@ -142,10 +154,11 @@ class MainScene : Scene {
 class MenuScene : Scene {
     Button playbtn, boardBuilderBtn;
 
-    public static MenuScene instance;
+    static MenuScene instance;
 
     static this() {
         instance = new MenuScene();
+        manager.manage(instance,"Menu");
     }
 
     this() {
@@ -176,7 +189,10 @@ class MenuScene : Scene {
         if(event.type == Event.EventType.MouseButtonReleased) {
             if(event.mouseButton.button == Mouse.Button.Left) {
                 if(playbtn.clicked(event.mouseButton.x,event.mouseButton.y)) {
-                    manager.changeScene(MainScene.instance);
+                    manager.changeScene("Main");
+                }
+                if(boardBuilderBtn.clicked(event.mouseButton.x,event.mouseButton.y)) {
+                    manager.changeScene("Builder");
                 }
             }
         }
