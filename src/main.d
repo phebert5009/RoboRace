@@ -1,6 +1,7 @@
 import dsfml.graphics;
 import std.stdio;
 import scene;
+import menuscene;
 //immutable Color ItemBlank = Color(27,130,95);
 
 int main(string[] args) {
