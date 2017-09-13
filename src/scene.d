@@ -127,7 +127,7 @@ class MainScene : Scene {
                 if(resetGame.clicked(event.mouseButton.x,event.mouseButton.y)) {
                     manager.changeScene(this);
                 }
-                if(newHand.clicked(event.mouseButton.x,event.mouseButton.y)) {
+                if(newHand.clicked(event.mouseButton.x,event.mouseButton.y && hand.wasUsedsed)) {
                     hand.discardAll(deck);
                     hand.drawCards(deck);
                 }

@@ -9,8 +9,12 @@ import dsfml.graphics;
 struct Hand {
     Card[] cards;
     int size = 9;
-    bool used = false;
+    private bool used = false;
     private int registered = 0;
+
+    private bool wasUsed() @property {
+        return used;
+    }
 
     void drawCards (Deck deck) {
         for (uint i = 0; i < size; i++) {
