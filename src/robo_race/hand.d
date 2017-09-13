@@ -12,7 +12,7 @@ struct Hand {
     private bool used = false;
     private int registered = 0;
 
-    private bool wasUsed() @property {
+    bool wasUsed() @property {
         return used;
     }
 
