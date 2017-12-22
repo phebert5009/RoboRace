@@ -183,7 +183,7 @@ class TileGenerator(bool preds = true) {
             }
             rTexture.display();
             memo[tileFile][walls] = rTexture;
-            Tile!true ans = new Tile!true();
+            Tile!preds ans = new Tile!preds();
             ans.texture = rTexture;
             return ans;
         }
