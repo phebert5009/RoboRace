@@ -67,8 +67,10 @@ struct Hand {
                         i++;
                     }
                 }
-                import std.stdio;
-                writeln("register ",cards[i+r]);
+                debug {
+                    import std.stdio;
+                    writeln("register ",cards[i+r]);
+                }
                 register(i+r);
             }
         }
