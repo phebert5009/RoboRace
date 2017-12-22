@@ -24,13 +24,15 @@ enum Walls : byte {
     all            = 0b1111
 }
 
-class Tile : Drawable {
+class Tile(bool preds = true) : Drawable {
     Vector2f position;
     RenderTexture texture;
-    void delegate(MoveInfo) onEnter; // called when player moves into the tile
-    void delegate(MoveInfo) onExit; // called when player moves off the tile
-    void delegate(MoveInfo,int) onLand; // called when player is on the tile the in parameter is for things such as conveyor priority
-
+    static if(preds) {
+        void delegate(MoveInfo) onEnter; // called when player moves into the tile
+        void delegate(MoveInfo) onExit; // called when player moves off the tile
+        void delegate(MoveInfo,int) onLand; // called when player is on the tile the in parameter is for things such as conveyor priority
+    }
+    
     override void draw(RenderTarget target, RenderStates states) {
         Sprite sprite = new Sprite();
         sprite.setTexture(texture.getTexture);
@@ -112,7 +114,7 @@ struct Tiles {
     }
 }
 
-class TileGenerator {
+class TileGenerator(bool preds = true) {
     import std.meta;
     private enum wallPath = "tiles/walls/";
     static Texture[string] textures;
@@ -141,11 +143,17 @@ class TileGenerator {
         
     }
 
-    static Tile generate(string tileFile,Walls walls = Walls.none) {
+    static Tile!preds generate(string tileFile,Walls walls = Walls.none) {
         import std.stdio;
         if(tileFile in memo && walls in memo[tileFile]) {
-            Tile ans = new Tile();
+            Tile!preds ans = new Tile!preds();
             ans.texture = memo[tileFile][walls];
+            static if(preds) {
+                auto dels = loadPreds(tileFile);
+                ans.onEnter = dels.onEnter;
+                ans.onExit = dels.onExit;
+                ans.onLand = dels.onLand;
+            }
             return ans;
         } else {
             auto rTexture = new RenderTexture();
@@ -175,8 +183,24 @@ class TileGenerator {
             }
             rTexture.display();
             memo[tileFile][walls] = rTexture;
-            Tile ans = new Tile();
+            Tile!true ans = new Tile!true();
             ans.texture = rTexture;
+            return ans;
+        }
+    }
+
+    static if(preds) {
+        import std.meta;
+        private static struct TilePreds {
+            void delegate(MoveInfo) onEnter; // called when player moves into the tile
+            void delegate(MoveInfo) onExit; // called when player moves off the tile
+            void delegate(MoveInfo,int) onLand;
+        }
+        private static TilePreds loadPreds(string tileFile) {
+            TilePreds ans;
+            ans.onEnter = null;
+            ans.onExit = null;
+            ans.onLand = null;
             return ans;
         }
     }
