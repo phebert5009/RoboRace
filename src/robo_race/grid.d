@@ -6,7 +6,6 @@ import robo_race.tile;
 
 class Grid : Drawable {
     Tile[][] board;
-    enum int[2] tileSize = [40,40];
 
     this(size_t width = 12, size_t height = 12) {
         board.reserve(width);
