@@ -2,3 +2,4 @@
 module boardbuilder;
 
 import boardbuilder.scene;
+import boardbuilder.board;
