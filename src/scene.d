@@ -26,7 +26,7 @@ class SceneManager : Drawable {
         currScene.init();
     }
 
-    static void manage(Scene scene,string id) { //convention name = class name - Scene (ex: MainScene -> Main)
+    static void manage(Scene scene,string id) { //convention id = class name - Scene (ex: MainScene -> Main)
         scenes[id] = scene;
     }
     

@@ -24,9 +24,10 @@ int main(string[] args) {
         window.clear(Color(67,175,125));
         window.draw(manager);
         window.display();
-
-        write("\r",dur!"seconds"(1)/clock.restart," "); // display frame time
-        stdout.flush();
+        debug {
+            write("\r",dur!"seconds"(1)/clock.restart," "); // display frame time
+            stdout.flush();
+        }
     }
     writeln();
     return 0;

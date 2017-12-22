@@ -9,3 +9,4 @@ roborace
 *.user*
 dub.selections.*
 *dlangide*
+roborace.settings
