@@ -2,16 +2,21 @@ import dsfml.graphics;
 import std.stdio;
 import scene;
 import menuscene;
+import robo_race.tile : tilesize;
 //immutable Color ItemBlank = Color(27,130,95);
 
 int main(string[] args) {
-    auto window = new RenderWindow(VideoMode(40*12+5*7+90*5,40*12+120),"RoboRace");
+    auto window = new RenderWindow(VideoMode(tilesize[0]*12+5*7+90*5,tilesize[1]*12+120),"RoboRace");
+
     Image icon = new Image();
     icon.loadFromFile("objects/Player1.png");
     window.setIcon(24,30,icon.getPixelArray);
+
     window.setFramerateLimit(30);
 
-    Clock clock = new Clock();
+    debug {
+        Clock clock = new Clock();
+    }
 
     manager = new SceneManager(MenuScene.instance);
 
