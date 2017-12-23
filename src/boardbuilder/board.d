@@ -3,4 +3,4 @@ module boardbuilder.board;
 import dsfml.graphics;
 import robo_race.grid;
 
-alias Board = BoardGrid!false;
+alias Board = TileGrid!false;

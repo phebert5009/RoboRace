@@ -3,9 +3,9 @@ module robo_race.grid;
 import dsfml.graphics;
 import robo_race.tile;
 
-alias Grid = BoardGrid!true;
+alias Grid = TileGrid!true;
 
-class BoardGrid(bool preds) : Drawable {
+class TileGrid(bool preds) : Drawable {
     Tile!preds[][] board;
 
     this(size_t width = 12, size_t height = 12) {
