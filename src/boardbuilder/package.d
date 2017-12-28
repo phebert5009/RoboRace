@@ -4,3 +4,4 @@ module boardbuilder;
 import boardbuilder.scene;
 import boardbuilder.board;
 import boardbuilder.selection;
+import boardbuilder.loader;

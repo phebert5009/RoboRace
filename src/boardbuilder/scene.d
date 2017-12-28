@@ -3,10 +3,14 @@ module boardbuilder.scene;
 import scene;
 import dsfml.graphics;
 import boardbuilder.board;
+import boardbuilder.selection;
+import robo_race.tile : tileSize;
+import defaults;
 
 class BuilderScene : Scene {
     static BuilderScene instance;
 
+    Selection selection;
     Board board;
 
     static this() {
@@ -15,12 +19,18 @@ class BuilderScene : Scene {
     }
 
     private this() {
-    
+        
     }
 
     bool init() {
         board = new Board();
-        return false;
+        selection = new Selection;
+        selection.topLeft = mult(xproj,mult(tileSize,board.size)) + selection.spacing;
+        debug {
+            import std.stdio;
+            writeln("Selection's position: ", selection.topLeft);
+        }
+        return true;
     }
 
     bool close() {
@@ -33,5 +43,7 @@ class BuilderScene : Scene {
 
     void draw(RenderTarget target, RenderStates states) {
         board.draw(target,states);
+        selection.draw(target,states);
+        
     }
 }
