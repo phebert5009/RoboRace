@@ -3,7 +3,7 @@ module robo_race.tile;
 import dsfml.graphics;
 import robo_race;
 
-enum int[2] tileSize = [40,40];
+enum Vector2!int tileSize = Vector2!int(40,40);
 
 enum Walls : byte {
     none           = 0b0000,

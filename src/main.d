@@ -2,11 +2,11 @@ import dsfml.graphics;
 import std.stdio;
 import scene;
 import menuscene;
-import robo_race.tile : tilesize;
+import robo_race.tile : tileSize;
 //immutable Color ItemBlank = Color(27,130,95);
 
 int main(string[] args) {
-    auto window = new RenderWindow(VideoMode(tilesize[0]*12+5*7+90*5,tilesize[1]*12+120),"RoboRace");
+    auto window = new RenderWindow(VideoMode(tileSize.x*12+5*7+90*5,tileSize.x*12+120),"RoboRace");
 
     Image icon = new Image();
     icon.loadFromFile("objects/Player1.png");

@@ -15,7 +15,7 @@ class TileGrid(bool preds) : Drawable {
             row.reserve(height);
             for(size_t y = 0; y < height; y++) {
                 Tile!preds tile = TileGenerator!preds.generate(Tiles.Basic.base);
-                tile.position = Vector2f(x*tileSize[0],y*tileSize[1]);
+                tile.position = Vector2f(x*tileSize.x,y*tileSize.y);
                 row ~= tile;
             }
             board ~= row;
