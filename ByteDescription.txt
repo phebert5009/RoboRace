@@ -1,0 +1,23 @@
+move (3): 1 - relative, 2 - direction
+turn (2): 1 - cw, 1 ccw
+damage (3): 2 - amount, 1 - instant
+wall (4): 4 - directions
+specials: goal/option/fix
+
+null
+0000 0000
+move           0 = u, 1 = d, 2 = l, 3 = r
+op turn rel nn  dir
+00  ??   ?  1   ??
+turn
+op turn x   cw ccw
+01  ??  00   ?  ?
+damage
+op turn inst   dam
+10  ??   ?   0  ??
+wall
+op   n s e w
+1100 ? ? ? ?
+special
+op     g o f
+1111 0 ? ? ?
