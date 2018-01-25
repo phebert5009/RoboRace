@@ -1,23 +1,45 @@
-move (3): 1 - relative, 2 - direction
-turn (2): 1 - cw, 1 ccw
-damage (3): 2 - amount, 1 - instant
-wall (4): 4 - directions
-specials: goal/option/fix
+phases
+000 cards
+001 express conveyor move 1 space
+010 corner conveyor turn if moved by conveyor onto it
+011 all conveyors move 1
+100 pushers push if active
+101 gears rotate 90 degs
+110 lasers
+111 specials
+
+op codes
+00 move
+01 turn
+10 damage
+11 walls and specials
 
 null
-0000 0000
-move           0 = u, 1 = d, 2 = l, 3 = r
-op turn rel nn  dir
-00  ??   ?  1   ??
+00 000 0 00 0 000
+
+move
+op phase nn dir rel extra
+00  ???  1   ??  ?   000
+
 turn
-op turn x   cw ccw
-01  ??  00   ?  ?
-damage
-op turn inst   dam
-10  ??   ?   0  ??
-wall
-op   n s e w
-1100 ? ? ? ?
-special
-op     g o f
-1111 0 ? ? ?
+op phase cw ccw cond pdir extra
+01  ???  ?   ?   ?    ??    00
+	if(!cond || lastDirectionTravelled == pdir) {
+		if(cw) {
+			if(ccw) uturn
+			else cwturn 
+		} else if(ccw) ccwturn
+	}
+
+damage (I feel like I could add a fn code here 
+op phase inst amount extra
+10  ???    ?   ????  000000
+
+walls
+op fn n e s w ummm
+11 00 ? ? ? ? 0000 0000
+
+specials
+op fn g o f x ummm
+11 01 ? ? ? ? 0000 0000
+(x does not do anything)
